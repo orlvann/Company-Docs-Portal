@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+</head>
+<body class="markdown-body" style="padding: 45px;">
+    <div id="content">⏳ Syncing with GitHub... (Wait 30 seconds)</div>
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.umd.min.js"></script>
+    <script>
+        async function load() {
+            try {
+                // Look for data.md in THIS folder
+                const r = await fetch('data.md');
+                if (!r.ok) throw new Error("File not found yet.");
+                const t = await r.text();
+                document.getElementById('content').innerHTML = marked.parse(t);
+            } catch (e) {
+                setTimeout(load, 5000); 
+            }
+        }
+        load();
+    </script>
+</body>
+</html>
