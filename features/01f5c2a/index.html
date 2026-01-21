@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Documentation</title>
+
+    <!-- GitHub-like typography -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css"
+    />
+
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #ffe6f0 0%, #e6f0ff 100%);
+      }
+
+      .markdown-body {
+        padding: 45px;
+        max-width: 980px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border-radius: 10px;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 100px;
+        color: #666;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="content" class="markdown-body loading">⏳ Loading documentation...</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.umd.min.js"></script>
+    <script>
+      async function load() {
+        try {
+          const response = await fetch("index.md", { cache: "no-store" });
+          if (!response.ok) throw new Error("Not found");
+          const markdown = await response.text();
+          document.getElementById("content").classList.remove("loading");
+          document.getElementById("content").innerHTML = marked.parse(markdown);
+        } catch (error) {
+          document.getElementById("content").innerHTML =
+            "<h1>Error Loading Documentation</h1><p>File not found.</p>";
+        }
+      }
+      load();
+    </script>
+  </body>
+</html>
