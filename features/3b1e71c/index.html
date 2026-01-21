@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <style>
+        .markdown-body { padding: 45px; max-width: 980px; margin: 0 auto; }
+        .loading { text-align: center; padding: 100px; color: #666; }
+    </style>
+</head>
+<body class="markdown-body">
+    <div id="content" class="loading">⏳ Loading documentation...</div>
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.umd.min.js"></script>
+    <script>
+        async function load() {
+            try {
+                const response = await fetch('index.md');
+                if (!response.ok) {
+                    throw new Error('Documentation not found');
+                }
+                const markdown = await response.text();
+                document.getElementById('content').innerHTML = marked.parse(markdown);
+            } catch (error) {
+                document.getElementById('content').innerHTML = 
+                    '<h1>Error Loading Documentation</h1>' +
+                    '<p>The documentation file could not be loaded.</p>';
+                console.error('Failed to load documentation:', error);
+            }
+        }
+        load();
+    </script>
+</body>
+</html>
